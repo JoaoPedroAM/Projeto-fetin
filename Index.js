@@ -23,6 +23,10 @@ app.get("/cadastro", (req, res) => {
   res.render("cadastro");
 });
 
+app.get("/login", (req, res) => {
+  res.render("login");
+});
+
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
