@@ -76,12 +76,22 @@
           />
         </div>
         <div class="input-box">
-          <label for="Confirmpassword">ID Estudantil</label>
+          <label for="carteirinha">ID Estudantil</label>
           <input
-            if=" Confirmpassword"
+            if=" Carteirinha"
             type="password "
-            name="Confirmpassword"
+            name="Carteirinha"
             placeholder="Digite o ID estudantil"
+            required
+          />
+        </div>
+        <div class="input-box">
+          <label for="Carteira de motorista">CNH</label>
+          <input
+            if=" Carteira de motorista"
+            type="password "
+            name="Carteira de motorista"
+            placeholder="Digite sua CNH"
             required
           />
         </div>
@@ -89,27 +99,12 @@
       </div>
       <div class="gender-inputs">
         <div class="gender-title">
-          <h6>Genero</h6>
+          <h6>Tipo De Registro</h6>
         </div>
         <div class="gender-group">
           <div class="gender-inputs">
-            <input type="radio" id="female" name="gender" />
-            <label for="female">Feminino</label>
-          </div>
-
-          <div class="gender-inputs">
-            <input type="radio" id="male" name="gender" />
-            <label for="male">Masculino</label>
-          </div>
-
-          <div class="gender-inputs">
-            <input type="radio" id="others " name="gender" />
-            <label for="others">Outros</label>
-          </div>
-
-          <div class="gender-inputs">
-            <input type="radio" id="none" name="gender" />
-            <label for="none ">Prefiro não dizer</label>
+            <input type="checkbox" name="gender" />
+            <label>Motorista</label>
           </div>
         </div>
       </div>

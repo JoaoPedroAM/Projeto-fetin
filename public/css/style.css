@@ -63,6 +63,7 @@ header {
   width: 100vh;
   height: 100vh;
   display: flex;
+  justify-content: center;
   box-shadow: 5px 10px rgba(red, green, blue, alpha);
 }
 
@@ -159,7 +160,6 @@ header {
   outline: 1px solid #6c63ff;
 }
 
-.input-boxlabel,
 .gender-title h6 {
   font-size: 0.75rem;
   font-weight: 600;
@@ -178,7 +178,7 @@ header {
 
 .gender-input {
   display: flex;
-  align-items: center;
+  justify-content: baseline;
 }
 .gender-input input {
   margin-right: 0.35rem;
