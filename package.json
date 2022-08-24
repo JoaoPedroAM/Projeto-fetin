@@ -1,9 +1,14 @@
 {
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "express": "^4.18.1",
+    "express-flash": "^0.0.2",
     "express-handlebars": "^6.0.6",
+    "express-session": "^1.17.3",
     "mysql": "^2.18.1",
-    "nodemon": "^2.0.19"
+    "nodemon": "^2.0.19",
+    "passport": "^0.6.0",
+    "passport-local": "^1.0.0"
   },
   "name": "projeto_fetin",
   "version": "1.0.0",
@@ -23,5 +28,8 @@
     "url": "https://github.com/JoaoPedroAM/Projeto-fetin/issues"
   },
   "homepage": "https://github.com/JoaoPedroAM/Projeto-fetin#readme",
-  "description": ""
+  "description": "",
+  "devDependencies": {
+    "dotenv": "^16.0.1"
+  }
 }
