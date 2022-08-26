@@ -2,7 +2,7 @@
   <!-- Forms -->
   <div class="form">
     <!-- cabeça do cadastro -->
-    <form action="#" class="backwhite">
+    <form action="/cadastro" method="post" class="backwhite">
       <div class="form-header">
         <div class="title">
           <h1>Cadastre-se</h1>
@@ -15,18 +15,18 @@
           <input
             if=" firstname"
             type="text"
-            name="firstname"
+            name="firstName"
             placeholder="Digite seu primeiro nome"
             required
           />
         </div>
 
         <div class="input-box">
-          <label for="lastname">Sobrenome</label>
+          <label for="lastName">Sobrenome</label>
           <input
             if=" lastname"
             type="text"
-            name="lastname"
+            name="lastName"
             placeholder="Digite seu sobrenome"
             required
           />
@@ -37,7 +37,7 @@
           <input
             if=" email "
             type="email "
-            name="email "
+            name="email"
             placeholder="Digite seu email "
             required
           />
@@ -48,14 +48,14 @@
           <input
             if=" number "
             type="tel    "
-            name="number "
+            name="celNumber"
             placeholder="(xx) xxxx-xxxx"
             required
           />
         </div>
 
         <div class="input-box">
-          <label for="password">Senha </label>
+          <label for="password">Senha</label>
           <input
             if=" password"
             type="password "
@@ -79,8 +79,8 @@
           <label for="carteirinha">ID Estudantil</label>
           <input
             if=" Carteirinha"
-            type="password "
-            name="Carteirinha"
+            type="password"
+            name="idEstudantil"
             placeholder="Digite o ID estudantil"
             required
           />
@@ -90,7 +90,7 @@
           <input
             if=" Carteira de motorista"
             type="password "
-            name="Carteira de motorista"
+            name="cnh"
             placeholder="Digite sua CNH"
             required
           />

@@ -15,7 +15,7 @@ let User = sequelize.define("users", {
     primaryKey: true,
     autoIncrement: true,
   },
-  primaryName: {
+  firstName: {
     type: Sequelize.STRING,
     allowNull: false,
   },
@@ -85,7 +85,7 @@ User.prototype.validPassword = function (password) {
 };
 
 sequelize.sync().then(() =>
-console.log("user tables has been successfully created if one does not exist"))
+console.log("Deu tudo certo"))
 .catch((error) => console.log(error)
 );
 

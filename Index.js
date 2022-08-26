@@ -4,11 +4,11 @@ const morgan = require("morgan");
 const hbs = require("express-handlebars");
 const express = require("express");
 const bodyParser = require("body-parser");
-const path = require("path");
 const User = require("./models/User");
+const path = __dirname;
 
 const app = express();
-const port = 3000;
+const port = 4000;
 
 app.set("port", port);
 app.use(morgan("dev"));
@@ -26,20 +26,25 @@ app.use(
   })
 );
 
-app.engine('hbs', hbs.engine({
-  extname: 'hbs',
-  defaultLayout: 'layout',
-  layoutsDir: __dirname + '/views/layout/',
-  partialsDir: __dirname + '/views/partials'
-}))
+app.use(express.static("public"));
+app.engine(
+  "hbs",
+  hbs.engine({
+    extname: "hbs",
+    defaultLayout: "main",
+    layoutsDir: __dirname + "/views/layouts",
+  })
+);
+
 app.set("view engine", "hbs");
 
 app.use((req, res, next) => {
   if (req.cookies.user_sid && !req.session.user) {
-    req.clearCookie("user_sid");
+    res.clearCookie("user_sid");
   }
   next();
 });
+
 let hbsContent = {
   userName: "",
   loggedin: false,
@@ -47,9 +52,16 @@ let hbsContent = {
   body: "Hello world",
 };
 
+app.use(express.static(__dirname + "/public"));
+app.use(
+  express.urlencoded({
+    extended: true,
+  })
+);
+
 let sessionChecker = (req, res, next) => {
   if (req.session.user && req.cookie.user_sid) {
-    res.redirect("/dashboard");
+    res.redirect("/home");
   } else {
     next();
   }
@@ -59,8 +71,7 @@ app.get("/", sessionChecker, (req, res) => {
   res.redirect("/login");
 });
 
-app
-  .route("/cadastro")
+app.route("/cadastro")
   .get((req, res) => {
     res.render("cadastro", hbsContent);
   })
@@ -69,29 +80,27 @@ app
       firstName: req.body.firstName,
       lastName: req.body.lastName,
       email: req.body.email,
-      lastName: req.body.lastName,
       celNumber: req.body.celNumber,
       password: req.body.password,
       idEstudantil: req.body.idEstudantil,
       cnh: req.body.cnh,
     })
       .then((user) => {
-        req.session.user = user.getDataValues;
-        res.redirect("/dashboard");
+        req.session.user = user.dataValues;
+        res.redirect("/home");
       })
       .catch((error) => {
+        console.log(error);
         res.redirect("/cadastro");
       });
   });
 
-app
-  .route("/login")
-  .get((req, res) => {
+app.route("/login").get((req, res) => {
     res.render("login", hbsContent);
   })
   .post((req, res) => {
-    let email = req.body.email;
-    let password = req.body.password;
+    var email = req.body.email;
+    var password = req.body.password;
 
     User.findOne({ where: { email: email } }).then(function (user) {
       if (!user) {
@@ -99,36 +108,38 @@ app
       } else if (!user.validPassword(password)) {
         res.redirect("/login");
       } else {
-        req.session.user = user.getDataValue;
-        res.redirect("/dashboard");
+        req.session.user = user.dataValues;
+        res.redirect("/home");
       }
     });
   });
 
-app.get("/dashboard", (req, res) => {
+app.get("/home", (req, res) => {
   if (req.session.user && req.cookies.user_sid) {
     hbsContent.loggedin = true;
     hbsContent.userName = req.session.firstName;
     hbsContent.title = "Tá logado parça";
-    res.render('home',hbsContent)
-  }else{
-    res.redirect('/login')
+    res.render("home", hbsContent);
+  } else {
+    res.redirect("/login");
   }
 });
 app.get("/logout", (req, res) => {
   if (req.session.user && req.cookies.user_sid) {
     hbsContent.loggedin = false;
     hbsContent.title = "Tá deslogou irmao";
-    res.clearCookie('user_sid')
+    res.clearCookie("user_sid");
     console.log(JSON.stringify(hbsContent));
-    res.redirect('/')
-  }else{
-    res.redirect('/login')
+    res.redirect("/");
+  } else {
+    res.redirect("/login");
   }
 });
 
-app.use(function (req,res,next){
-  res.status(404).send("Pagina não encontrada")
-})
 
-app.listen(app.get('port'),() => console.log(`App rodando na porta ${port}`))
+
+app.use(function (req, res, next) {
+  res.status(404).send("Pagina não encontrada");
+});
+
+app.listen(app.get("port"), () => console.log(`App rodando na porta ${port}`));
