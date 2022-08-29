@@ -6,6 +6,73 @@
   <!-- Forms -->
   <div class="form">
     <!-- cabeça do cadastro -->
+
+
+
+
+
+
+
+    {{#if driver}}
+    <form action="/create" method="post" class="backwhite">
+      <div class="form-header">
+        <div class="title">
+          <h1>Crie seu post de carona</h1>
+        </div>
+      </div>
+
+      <div class="input-group">
+        <div class="input-box">
+          <label>Faculdade</label>
+          <input
+            name="starterCity"
+            type="text"
+            placeholder="Selecione sua faculdade"
+            required
+          />
+        </div>
+
+        <div class="input-box">
+          <label>Chegada</label>
+          <input
+          name="finalCity"
+            type="text"
+            placeholder="Local de chegada"
+            required
+          />
+        </div>
+
+        <div class="input-box">
+          <label>Data</label>
+         <input type="date" id="start" name="date"
+       value="">
+        </div>
+
+        <div class="input-box" id="time">
+          <label>Hora</label>
+         <input type="time" name="time"
+       value="">
+        </div>
+
+        <div class="input-box">
+          <label>Preço</label>
+         <input type="text" name="price" placeholder="R$1,00">
+        </div>
+      </div>
+       <div class="continue-button-home">
+        <input type="submit" value="Criar carona">
+      </div>
+    </form>
+
+
+
+
+
+
+
+
+  {{else}}
+  <div class="form-motorista">
     <form action="#" class="backwhite">
       <div class="form-header">
         <div class="title">
@@ -43,3 +110,7 @@
       </div>
     </form> 
   </div>
+  {{/if}}
+  </div>
+
+  

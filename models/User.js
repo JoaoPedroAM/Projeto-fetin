@@ -1,92 +1,108 @@
-const bcrypt = require("bcrypt");
-const { Sequelize } = require("sequelize");
+const bcrypt = require('bcrypt')
+const Sequelize = require('sequelize')
+
 
 const sequelize = new Sequelize('fetin', 'root', 'root', {
-  host: "localhost",
-  port: 3306,
-  dialect: "mysql"
-});
-
-let User = sequelize.define("users", {
-  id: {
-    type: Sequelize.INTEGER,
-    unique: true,
-    allowNull: false,
-    primaryKey: true,
-    autoIncrement: true,
-  },
-  firstName: {
-    type: Sequelize.STRING,
-    allowNull: false,
-  },
-  lastName: {
-    type: Sequelize.STRING,
-    allowNull: false,
-  },
-  email: {
-    type: Sequelize.STRING,
-    allowNull: false,
-    validate: {
-      isEmail: { msg: "Email invalido" },
-      notEmpty: {
-        msg: "O campo email precisa ser preenchido",
-      },
-      notNull: {
-        msg: "O campo email precisa ser preenchido",
-      },
+    host: "localhost",
+    port: 3306,
+    dialect: "mysql"
+  });
+  
+  let User = sequelize.define("users", {
+    idUser: {
+      type: Sequelize.INTEGER,
+      unique: true,
+      allowNull: false,
+      primaryKey: true,
+      autoIncrement: true,
     },
-  },
-  celNumber: {
-    type: Sequelize.STRING,
-    allowNull: false,
-    validate: {
-      len: {
-        args: [0, 11],
-        msg: "O campo telefone precisa ser preenchido",
-      },
+    firstName: {
+      type: Sequelize.STRING,
+      allowNull: false,
     },
-  },
-  password: {
-    type: Sequelize.STRING,
-    allowNull: false,
-    validate: {
-      notEmpty: {
-        msg: "O campo senha precisa ser preenchido",
-      },
-      notNull: {
-        msg: "O campo senha precisa ser preenchido",
-      },
+    lastName: {
+      type: Sequelize.STRING,
+      allowNull: false,
     },
-  },
-  idEstudantil: {
-    type: Sequelize.STRING,
-    allowNull: false,
-    validate: {
-      notEmpty: {
-        msg: "O campo Id Estudantil precisa ser preenchido",
-      },
-      notNull: {
-        msg: "O campo Id Estudantil precisa ser preenchido",
-      },
+    email: {
+      type: Sequelize.STRING,
+      allowNull: false,
+        
     },
-  },
-  cnh: {
-    type: Sequelize.STRING,
-  },
-});
-
-User.beforeCreate((user, options) => {
-  const salt = bcrypt.genSaltSync();
-  user.password = bcrypt.hashSync(user.password, salt);
-});
-
-User.prototype.validPassword = function (password) {
-  return bcrypt.compareSync(password, this.password);
-};
-
-sequelize.sync().then(() =>
-console.log("Deu tudo certo"))
-.catch((error) => console.log(error)
-);
-
-module.exports = User;
+    celNumber: {
+      type: Sequelize.STRING,
+      allowNull: false,
+      
+    },
+    password: {
+      type: Sequelize.STRING,
+      allowNull: false,
+      
+    },
+    idEstudantil: {
+      type: Sequelize.STRING,
+      allowNull: false,
+      
+    },
+    driver: {
+      type: Sequelize.BOOLEAN,
+    },
+  
+  });
+  
+  let Corrida = sequelize.define("corridas", {
+    idCorrida: {
+      type: Sequelize.INTEGER,
+      unique: true,
+      allowNull: false,
+      primaryKey: true,
+      autoIncrement: true,
+    },
+    starterCity: {
+      type: Sequelize.STRING,
+      allowNull: false,
+    },
+    finalCity: {
+      type: Sequelize.STRING,
+      allowNull: false,
+    },
+    date: {
+      type: Sequelize.DATEONLY,
+      allowNull: false,
+    },
+    time: {
+      type: Sequelize.TIME,
+      allowNull: true,
+  
+    },
+    price: {
+      type: Sequelize.DOUBLE,
+      allowNull: false,
+    
+    },
+    
+  
+  });
+  
+  
+  
+  User.hasMany( Corrida, { as: 'corridas' } );
+  Corrida.hasOne(Corrida ,{as:"users"})
+  
+  
+  User.beforeCreate((user, options) => {
+    const salt = bcrypt.genSaltSync();
+    user.password = bcrypt.hashSync(user.password, salt);
+  });
+  
+  User.prototype.validPassword = function (password) {
+    return bcrypt.compareSync(password, this.password);
+  };
+  
+  sequelize.sync().then(() =>
+  console.log("Deu tudo certo"))
+  .catch((error) => console.log(error)
+  );
+   
+  exports.User = User;
+  exports.Corrida = Corrida;
