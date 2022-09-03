@@ -60,7 +60,7 @@
         </div>
       </div>
        <div class="continue-button-home">
-        <input type="submit" value="Criar carona">
+        <input type="submit" class="btn btn-primary" value="Criar carona">
       </div>
     </form>
 
@@ -73,7 +73,7 @@
 
   {{else}}
   <div class="form-motorista">
-    <form action="#" class="backwhite">
+    <form action="/search" method="post" class="backwhite">
       <div class="form-header">
         <div class="title">
           <h1>Seja bem vindo</h1>
@@ -87,6 +87,7 @@
             type="text"
             placeholder="Selecione sua faculdade"
             required
+            name="starterCity"
           />
         </div>
 
@@ -94,6 +95,7 @@
           <label>Chegada</label>
           <input
             type="text"
+            name="finalCity"
             placeholder="Local de chegada"
             required
           />
@@ -101,16 +103,39 @@
 
         <div class="input-box">
           <label>Data</label>
-         <input type="date" id="start" name="trip-start"
+         <input type="date" id="start" name="date"
        value="">
         </div>
       </div>
        <div class="continue-button-home">
-        <button><a href="#">Continuar</a></button>
+        <input type="submit" class="btn btn-primary" value="Procurar carona">
       </div>
     </form> 
   </div>
   {{/if}}
-  </div>
-
   
+
+  </div>
+  </div>
+<div class="container">
+<div class="main-container">
+  {{#if runs}}
+    {{#each data}}
+      {{#dataValues}}
+
+            <div class="card">
+                <h1>{{date}}</h1>
+                <div class="content">
+                  <p> De: {{starterCity}}
+                  <p>Para: {{finalCity}} </p>
+                  <p>{{time}}</p>
+                  <p>R${{price}}</p>
+                  </p>
+                  <button class="btn btn-light">Clique para entrar em contato</button>
+                </div>  
+              </div>
+      {{/dataValues}}
+    {{/each}}
+  {{/if}}
+</div>
+</div>

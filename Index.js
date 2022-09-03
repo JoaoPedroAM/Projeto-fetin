@@ -53,6 +53,7 @@ var hbsContent = {
   loggedin: false,
   driver: false,
   id: null,
+  
 };
 
 app.use(express.static(__dirname + "/public"));
@@ -140,7 +141,6 @@ app.get("/logout", (req, res) => {
     dadosUsuario = null;
 
     res.clearCookie("user_sid");
-    console.log(JSON.stringify(hbsContent));
     res.redirect("/");
   } else {
     res.redirect("/login");
@@ -163,6 +163,66 @@ app
     }
     res.redirect("/home");
   });
+
+
+
+
+
+
+  let aux = null
+app
+  .route("/search")
+  .get((req, res) => {})
+  .post((req, res) => {
+    
+    let starterCity = req.body.starterCity;
+    let finalCity = req.body.finalCity;
+    let date = req.body.date;
+    let idUsuario = null
+    async function getRuns(starterCity,finalCity,date) {
+       let resultado = await DB.Corrida.findAll({
+        where: {
+          starterCity: starterCity,
+          finalCity: finalCity,
+          date: date
+        },
+      });
+      
+      return resultado; 
+    }
+
+    async function getUser(userId) {
+      let resultadoUser = await DB.User.findAll({
+        where: {
+          idUser:userId
+        },
+      });
+      return resultadoUser
+    }
+
+    getRuns(starterCity,finalCity,date)
+      .then(function (data) {
+        if(data){
+          
+        
+        res.render('home',{
+          
+          data: data,
+          user: aux,
+          runs: true,
+          loggedin: hbsContent.loggedin
+          
+        })
+        }else{
+          console.log("Não há corridas");
+        }
+      })
+      .catch((err) => console.log(err));
+  });
+
+
+
+
 
 app.use(function (req, res, next) {
   res.status(404).send("Pagina não encontrada");

@@ -86,7 +86,6 @@ const sequelize = new Sequelize('fetin', 'root', 'root', {
   
   
   
-  User.hasMany( Corrida, { as: 'corridas' } );
   Corrida.hasOne(Corrida ,{as:"users"})
   
   
