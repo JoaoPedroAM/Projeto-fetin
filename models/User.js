@@ -2,9 +2,9 @@ const bcrypt = require('bcrypt')
 const Sequelize = require('sequelize')
 
 
-const sequelize = new Sequelize('fetin', 'root', 'root', {
+const sequelize = new Sequelize('fetin', 'root', 'example', {
     host: "localhost",
-    port: 3306,
+    port: 3307,
     dialect: "mysql"
   });
   

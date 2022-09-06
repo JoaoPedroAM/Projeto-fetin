@@ -1,4 +1,4 @@
-const DB = require("./models/user");
+const DB = require("././models/User");
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
 const morgan = require("morgan");
